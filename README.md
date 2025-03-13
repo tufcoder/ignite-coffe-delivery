@@ -1,16 +1,3 @@
-<style>
-  .images {
-    display: flex;
-    gap: 4px;
-  }
-
-  img {
-    max-width: 10rem;
-    height: auto;
-    display: block;
-  }
-</style>
-
 # Desafio: Ignite Coffee Delivery ☕
 
 Essa aplicação foi criada seguindo as diretrizes do desafio "Coffee Delivery"
@@ -21,10 +8,8 @@ deve segui-lo para construir a aplicação.
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/3e3db162-8cc3-49ea-ba45-1f631c246457/deploy-status)](https://app.netlify.com/sites/tufcoder-coffee-delivery/deploys)
 
-<div class="images">
-  <img src="assets/home-desktop.png" width="1168" height="945" />
-  <img src="assets/form-desktop.png" width="1155" height="825" />
-</div>
+![](assets/home-desktop.png)
+![](assets/form-desktop.png)
 
 ## Sobre o desafio 📋
 
@@ -55,9 +40,11 @@ A aplicação exige do desenvolvedor:
 - Busca automática de endereço através da API [`VIACEP`](https://viacep.com.br/)
 - Funcionalidade de voltar para a Home ao entrar na página Checkout
 
-<div class="images">
-  <img src="assets/home-mobile.png" width="370" height="734" />
-  <img src="assets/coffees-mobile.png" width="370" height="798" />
-  <img src="assets/form-mobile1.png" width="370" height="602" />
-  <img src="assets/form-mobile2.png" width="370" height="529" />
-</div>
+<table style="max-width: 800px; margin: 0 auto;">
+  <tr>
+    <td style="vertical-align: top; padding: 5px 10px;"><img src="assets/home-mobile.png" style="max-width: 100%; height: auto;" alt="Home Mobile" /></td>
+    <td style="vertical-align: top; padding: 5px 10px;"><img src="assets/coffees-mobile.png" style="max-width: 100%; height: auto;" alt="Coffees Mobile" /></td>
+    <td style="vertical-align: top; padding: 5px 10px;"><img src="assets/form-mobile1.png" style="max-width: 100%; height: auto;" alt="Form Mobile 1" /></td>
+    <td style="vertical-align: top; padding: 5px 10px;"><img src="assets/form-mobile2.png" style="max-width: 100%; height: auto;" alt="Form Mobile 2" /></td>
+  </tr>
+</table>
