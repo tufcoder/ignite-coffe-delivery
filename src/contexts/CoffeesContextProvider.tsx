@@ -126,7 +126,6 @@ export function CoffeesContextProvider({ children }: CoffeesContextProviderProps
   useEffect(() => {
     const storedData = localStorage.getItem(storageKey)
     if (storedData) {
-      console.log('storage')
       try {
         const parsedData = JSON.parse(storedData)
         setCoffees(parsedData.coffees || [])
@@ -137,7 +136,6 @@ export function CoffeesContextProvider({ children }: CoffeesContextProviderProps
         setOrders([])
       }
     } else {
-      console.log('seed')
       setCoffees(data)
       setOrders([])
     }
