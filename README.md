@@ -1,54 +1,63 @@
-# React + TypeScript + Vite
+<style>
+  .images {
+    display: flex;
+    gap: 4px;
+  }
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+  img {
+    max-width: 10rem;
+    height: auto;
+    display: block;
+  }
+</style>
 
-Currently, two official plugins are available:
+# Desafio: Ignite Coffee Delivery ☕
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Essa aplicação foi criada seguindo as diretrizes do desafio "Coffee Delivery"
+do curso de React da Rocketseat.
 
-## Expanding the ESLint configuration
+O desafio apresenta um layout no Figma para servir de guia e o desenvolvedor
+deve segui-lo para construir a aplicação.
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+[![Netlify Status](https://api.netlify.com/api/v1/badges/3e3db162-8cc3-49ea-ba45-1f631c246457/deploy-status)](https://app.netlify.com/sites/tufcoder-coffee-delivery/deploys)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+<div class="images">
+  <img src="assets/home-desktop.png" width="1168" height="945" />
+  <img src="assets/form-desktop.png" width="1155" height="825" />
+</div>
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Sobre o desafio 📋
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Nesse desafio, você vai desenvolver uma aplicação para gerenciar um carrinho 
+de compras de uma cafeteria fictícia, que contém as seguintes funcionalidades:
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
+- Listagem de produtos (cafés) disponíveis para compra
+- Adicionar uma quantidade específicas de itens no carrinho
+- Aumentar ou remover a quantidade de itens no carrinho
+- Formulário para o usuário preencher o seu endereço
+- Exibir o total de itens no carrinho no Header
+- Exibir o valor total da soma de itens no carrinho multiplicados pelo valor
+
+A aplicação exige do desenvolvedor:
+
+- Estados
+- ContextAPI
+- LocalStorage
+- Imutabilidade do estado
+- Listas e chaves no ReactJS
+- Propriedades
+- Componentização
+
+## O que acrescentei ao projeto ➕
+
+- Layout `Responsivo` utilizando Mobile First Development
+- `Geolocalização` com a API da [Nominatim](https://nominatim.org/release-docs/latest/api/Reverse/)
+- Busca automática de endereço através da API [`VIACEP`](https://viacep.com.br/)
+- Funcionalidade de voltar para a Home ao entrar na página Checkout
+
+<div class="images">
+  <img src="assets/home-mobile.png" width="370" height="734" />
+  <img src="assets/coffees-mobile.png" width="370" height="798" />
+  <img src="assets/form-mobile1.png" width="370" height="602" />
+  <img src="assets/form-mobile2.png" width="370" height="529" />
+</div>

@@ -15,7 +15,7 @@ export const FormContainer = styled.form`
 `
 
 export const MainContainer = styled.main`
-  margin-block-start: ${pixelsToRem(40)};
+  margin-block-start: ${pixelsToRem(10)};
   display: flex;
   flex-direction: column;
   gap: 0.75rem;
