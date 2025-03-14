@@ -1,4 +1,4 @@
-import { CoffeeType } from "../contexts/CoffeesContextProvider"
+import { CoffeeType } from "../contexts/CoffeesContext"
 
 export enum ActionTypes {
   ADD_AMOUNT,

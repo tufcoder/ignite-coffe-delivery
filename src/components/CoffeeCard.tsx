@@ -1,6 +1,6 @@
 import { NavLink } from 'react-router';
 
-import { CoffeeType } from '../contexts/CoffeesContextProvider';
+import { CoffeeType } from '../contexts/CoffeesContext';
 
 import { ButtonCart } from './ButtonCart';
 import { ButtonPlusMinus } from './ButtonPlusMinus';
