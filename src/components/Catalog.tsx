@@ -15,7 +15,7 @@ export function Catalog() {
         <h2>Nossos cafés</h2>
       </header>
       <main>
-        {coffees.map(coffee => (
+        {coffees.length > 0 && coffees.map(coffee => (
           <CoffeeCard key={coffee.id} coffee={coffee} />
         ))}
       </main>

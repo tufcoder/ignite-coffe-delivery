@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { Minus, Plus } from "@phosphor-icons/react";
 
 import { CoffeesContext } from "../contexts/CoffeesContext";
-import { CoffeeType } from "../contexts/CoffeesContextProvider";
 
 import { IconWrapper } from "./IconWrapper";
 import { IconTitles } from "../utils/constants";
@@ -13,20 +12,21 @@ import {
 } from "./ButtonPlusMinus.styles";
 
 interface ButtonPlusMinusProps {
-  item: CoffeeType
+  id: number
 }
 
-export function ButtonPlusMinus({ item }: ButtonPlusMinusProps) {
-  const { addAmount, subtractAmount } = useContext(CoffeesContext)
+export function ButtonPlusMinus({ id }: ButtonPlusMinusProps) {
+  const { coffees, addAmount, subtractAmount } = useContext(CoffeesContext)
+  const coffee = coffees.find(item => item.id === id)
 
   function onAddAmount(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
-    addAmount(item)
+    addAmount(id)
   }
 
   function onSubtractAmount(event: React.MouseEvent<HTMLButtonElement>) {
     event.preventDefault()
-    subtractAmount(item)
+    subtractAmount(id)
   }
 
   return (
@@ -34,7 +34,7 @@ export function ButtonPlusMinus({ item }: ButtonPlusMinusProps) {
       <button onClick={(e) => onSubtractAmount(e)}>
         <IconWrapper icon={<Minus size={14} weight="bold" />} title={IconTitles.Minus} />
       </button>
-      <AmountSpan>{item.amount}</AmountSpan>
+      <AmountSpan>{coffee ? coffee.amount : 0}</AmountSpan>
       <button onClick={(e) => onAddAmount(e)}>
         <IconWrapper icon={<Plus size={14} weight="bold" />} title={IconTitles.Plus} />
       </button>

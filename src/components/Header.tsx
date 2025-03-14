@@ -28,7 +28,7 @@ export function Header() {
           {!cityLocation && !ufLocation && `Desconhecido`}
         </address>
         <nav>
-          <Cart items={orders.length} />
+          <Cart items={orders?.length > 0 ? orders.length : 0} />
         </nav>
       </aside>
     </HeaderContainer>

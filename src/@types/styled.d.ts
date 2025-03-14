@@ -1,6 +1,6 @@
 import 'styled-components'
 
-import { defaultTheme } from '../styles/myTheme'
+import { defaultTheme } from '../styles/defaultTheme'
 
 type ThemeType = typeof defaultTheme
 

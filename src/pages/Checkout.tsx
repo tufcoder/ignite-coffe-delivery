@@ -54,7 +54,7 @@ const formSubmitOrderSchema = z.object({
 export type FormSubmitOrderType = z.infer<typeof formSubmitOrderSchema>
 
 export function Checkout() {
-  const { orders, clean } = useContext(CoffeesContext)
+  const { orders, clearItems } = useContext(CoffeesContext)
   const { register, handleSubmit, reset, setValue, /*formState*/ } = useForm({
     resolver: zodResolver(formSubmitOrderSchema),
     defaultValues: {
@@ -80,7 +80,7 @@ export function Checkout() {
   function handleFormSubmit(data: FormSubmitOrderType) {
     if (orders.length > 0) {
       reset()
-      clean()
+      clearItems()
       navigate('/success', { state: data })
     }
   }
@@ -227,7 +227,7 @@ export function Checkout() {
         <AsideContainer>
           <h2>Cafés selecionados</h2>
           <AsideContentContainer>
-            <OrderSummary items={orders} />
+            <OrderSummary />
             <Summary>
               <SummaryItem>
                 Total de itens <span>{priceConverter.convertToCurrencyBRL(totalItens)}</span>

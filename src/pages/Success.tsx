@@ -18,6 +18,7 @@ import {
 export function Success() {
   const location = useLocation()
   const data = location.state as FormSubmitOrderType
+
   return (
     <SuccessContainer>
       <header>

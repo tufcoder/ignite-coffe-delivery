@@ -1,8 +1,14 @@
 import styled from "styled-components";
 
-import { baloo2XS, robotoButtonM, robotoL, robotoM, robotoS } from "../styles/typograph";
 import { pixelsToRem } from "../styles/utils";
 import { above, media } from "../styles/breakpoints";
+import {
+  baloo2XS,
+  robotoButtonM,
+  robotoL,
+  robotoM,
+  robotoS,
+} from "../styles/typograph";
 
 export const FormContainer = styled.form`
   display: flex;

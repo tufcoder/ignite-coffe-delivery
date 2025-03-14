@@ -1,21 +1,31 @@
 import { ReactNode, useEffect, useState } from "react"
+import { useImmerReducer } from "use-immer"
 import axios from "axios"
 
 import { CoffeesContext } from "./CoffeesContext"
+import {
+  //coffeesReducer,
+  coffeesImmerReducer,
+  addAmountAction,
+  clearItemsAction,
+  removeOrderItemsAction,
+  subtractAmountAction,
+  CoffeeState,
+} from "../reducers/coffees"
 
 import data from '../assets/seed/data.json'
 
 export type CoffeeType = typeof data[0]
 
 export type CoffeesContextType = {
-  coffees: CoffeeType[],
-  orders: CoffeeType[],
-  cityLocation: string,
-  ufLocation: string,
-  addAmount: (coffee: CoffeeType) => void,
-  subtractAmount: (coffee: CoffeeType) => void,
-  removeOrderItem: (id: number) => void,
-  clean: () => void,
+  coffees: CoffeeType[]
+  orders: CoffeeType[]
+  cityLocation: string
+  ufLocation: string
+  addAmount: (id: number) => void
+  subtractAmount: (id: number) => void
+  removeOrderItems: (id: number) => void
+  clearItems: () => void
 }
 
 interface CoffeesContextProviderProps {
@@ -23,74 +33,51 @@ interface CoffeesContextProviderProps {
 }
 
 export function CoffeesContextProvider({ children }: CoffeesContextProviderProps) {
-  const [coffees, setCoffees] = useState<CoffeeType[]>([])
-  const [orders, setOrders] = useState<CoffeeType[]>([])
+  const storageKey = import.meta.env.VITE_STORAGE
+  const initialState: CoffeeState = {
+    coffees: data,
+    orders: [],
+  }
+  const [coffeeState, dispatch] = useImmerReducer(
+    coffeesImmerReducer,
+    initialState,
+    () => {
+      const storedState = localStorage.getItem(storageKey)
+      if (storedState) {
+        return JSON.parse(storedState) as CoffeeState
+      }
+      return initialState
+    }
+  )
   const [cityLocation, setCityLocation] = useState('')
   const [ufLocation, setUfLocation] = useState('')
-  const [dataChanged, setDataChanged] = useState(false);
+  const { coffees, orders } = coffeeState
 
-  const storageKey = '@coffee-delivery-1.0.0'
-
-  function addAmount(coffee: CoffeeType) {
-    coffee.amount++
-    setCoffees(state => {
-      return state.map(item => {
-        if (item.id === coffee.id) {
-          return { ...item, amount: coffee.amount }
-        }
-        return item
-      })
-    })
-    setDataChanged(true);
+  function addAmount(id: number) {
+    dispatch(addAmountAction(id))
   }
 
-  function subtractAmount(coffee: CoffeeType) {
-    if (coffee.amount > 1) {
-      coffee.amount--
-      setCoffees(state => {
-        return state.map(item => {
-          if (item.id === coffee.id) {
-            return { ...item, amount: coffee.amount }
-          }
-          return item
-        })
-      })
-    }
-    setDataChanged(true);
+  function subtractAmount(id: number) {
+    dispatch(subtractAmountAction(id))
   }
 
-  function removeOrderItem(id: number) {
-    setOrders(state => state.filter(item => item.id !== id))
-    setCoffees(state => {
-      return state.map(item => {
-        if (item.id === id) {
-          return { ...item, amount: 0 }
-        }
-        return item
-      })
-    })
-    setDataChanged(true);
+  function removeOrderItems(id: number) {
+    dispatch(removeOrderItemsAction(id))
   }
 
-  function clean() {
-    setCoffees(state => state.map(item => ({ ...item, amount: 0 })))
-    setOrders([])
-    setDataChanged(true);
+  function clearItems() {
+    dispatch(clearItemsAction())
   }
 
   async function fetchAddress(latitude: number, longitude: number) {
-    if (import.meta.env.MODE !== 'development') {
-      try {
-        const response = await axios.get(
-          `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
-        );
-        return response.data
-      } catch (error) {
-        console.error('Erro ao buscar endereço:', error)
-        return null
-      }
-    } else {
-      return null;
+    try {
+      const response = await axios.get(
+        `https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`
+      );
+      return response.data
+    } catch (error) {
+      console.error('Erro ao buscar endereço:', error)
+      return null
     }
   }
 
@@ -115,42 +102,15 @@ export function CoffeesContextProvider({ children }: CoffeesContextProviderProps
         console.error("Browser dont support geolocation.")
       }
     }
-    getLocalization()
-  }, [])
-
-  function persistData(coffees: CoffeeType[], orders: CoffeeType[]) {
-    const dataToStore = { coffees, orders }
-    localStorage.setItem(storageKey, JSON.stringify(dataToStore))
-  }
-
-  useEffect(() => {
-    const storedData = localStorage.getItem(storageKey)
-    if (storedData) {
-      try {
-        const parsedData = JSON.parse(storedData)
-        setCoffees(parsedData.coffees || [])
-        setOrders(parsedData.orders || [])
-      } catch (error) {
-        console.error('Error parsing localStorage data', error)
-        setCoffees(data)
-        setOrders([])
-      }
-    } else {
-      setCoffees(data)
-      setOrders([])
+    if (import.meta.env.MODE !== 'development') {
+      getLocalization()
     }
   }, [])
 
   useEffect(() => {
-    if (dataChanged) {
-      persistData(coffees, orders);
-      setDataChanged(false);
-    }
-  }, [coffees, orders, dataChanged])
-
-  useEffect(() => {
-    setOrders(coffees.filter(item => item.amount > 0))
-  }, [coffees])
+    const stateJson = JSON.stringify(coffeeState)
+    localStorage.setItem(storageKey, stateJson)
+  }, [coffeeState, storageKey])
 
   return (
     <CoffeesContext.Provider
@@ -161,8 +121,8 @@ export function CoffeesContextProvider({ children }: CoffeesContextProviderProps
         ufLocation,
         addAmount,
         subtractAmount,
-        removeOrderItem,
-        clean,
+        removeOrderItems,
+        clearItems,
       }}
     >
       {children}

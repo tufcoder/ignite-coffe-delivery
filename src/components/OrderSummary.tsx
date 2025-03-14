@@ -1,7 +1,6 @@
 import { useContext } from "react";
 
 import { CoffeesContext } from "../contexts/CoffeesContext";
-import { CoffeeType } from "../contexts/CoffeesContextProvider";
 
 import { ButtonPlusMinus } from "./ButtonPlusMinus";
 import { ButtonRemove } from "./ButtonRemove";
@@ -14,24 +13,20 @@ import {
   ContentContainer
 } from "./OrderSummary.styles";
 
-interface OrderSummaryProps {
-  items: CoffeeType[]
-}
-
-export function OrderSummary({ items }: OrderSummaryProps) {
-  const { removeOrderItem } = useContext(CoffeesContext)
+export function OrderSummary() {
+  const { orders, removeOrderItems } = useContext(CoffeesContext)
 
   function handleClickRemove(
     event: React.MouseEvent<HTMLButtonElement>,
     id: number,
   ) {
     event.preventDefault()
-    removeOrderItem(id)
+    removeOrderItems(id)
   }
 
   return (
     <>
-      {items.map(item => (
+      {orders.map(item => (
         <OrderSummaryContainer key={item.id}>
           <ContentContainer>
             <img
@@ -43,7 +38,7 @@ export function OrderSummary({ items }: OrderSummaryProps) {
             <div>
               <p>{item.title}</p>
               <ButtonsContainer>
-                <ButtonPlusMinus item={item} />
+                <ButtonPlusMinus id={item.id} />
                 <ButtonRemove onClick={(e) => handleClickRemove(e, item.id)} />
               </ButtonsContainer>
             </div>

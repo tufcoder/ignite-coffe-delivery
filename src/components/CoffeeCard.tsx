@@ -1,7 +1,5 @@
-// import { useContext } from 'react';
 import { NavLink } from 'react-router';
 
-// import { CoffeesContext } from '../contexts/CoffeesContext';
 import { CoffeeType } from '../contexts/CoffeesContextProvider';
 
 import { ButtonCart } from './ButtonCart';
@@ -22,13 +20,7 @@ interface CoffeeCardProps {
 }
 
 export function CoffeeCard({ coffee }: CoffeeCardProps) {
-  // const { coffees, orders } = useContext(CoffeesContext)
   const regionalPrice = priceConverter.convertPriceToDecimalBRL(coffee.price, 2, 2)
-
-  // function handleClickCart() {
-  //   console.log(coffees)
-  //   console.log(orders)
-  // }
 
   return (
     <CoffeeCardContainer>
@@ -54,9 +46,8 @@ export function CoffeeCard({ coffee }: CoffeeCardProps) {
           R$ <strong>{regionalPrice}</strong>
         </span>
         <div>
-          <ButtonPlusMinus item={coffee} />
+          <ButtonPlusMinus id={coffee.id} />
           <NavLink to='/checkout'>
-            {/* <ButtonCart onClick={handleClickCart} /> */}
             <ButtonCart />
           </NavLink>
         </div>

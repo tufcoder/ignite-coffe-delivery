@@ -11,7 +11,7 @@ import vectorPurple2 from '../assets/svg/Vector-Purple-2.svg'
 import vectorPurple3 from '../assets/svg/Vector-Purple-3.svg'
 
 import { IconTitles, ImageTitles } from '../utils/constants'
-import { defaultTheme } from '../styles/myTheme'
+import { defaultTheme } from '../styles/defaultTheme'
 
 import {
   HeaderContainer,
