@@ -2,7 +2,8 @@ import { ReactNode, useEffect, useState } from "react"
 import { useImmerReducer } from "use-immer"
 import axios from "axios"
 
-import { CoffeesContext } from "./CoffeesContext"
+import { CoffeesContext, jsonData } from "./CoffeesContext"
+
 import {
   //coffeesReducer,
   coffeesImmerReducer,
@@ -13,20 +14,7 @@ import {
   CoffeeState,
 } from "../reducers/coffees"
 
-import data from '../assets/seed/data.json'
-
-export type CoffeeType = typeof data[0]
-
-export type CoffeesContextType = {
-  coffees: CoffeeType[]
-  orders: CoffeeType[]
-  cityLocation: string
-  ufLocation: string
-  addAmount: (id: number) => void
-  subtractAmount: (id: number) => void
-  removeOrderItems: (id: number) => void
-  clearItems: () => void
-}
+import { FormSubmitOrderType } from "../pages/Checkout"
 
 interface CoffeesContextProviderProps {
   children: ReactNode
@@ -35,7 +23,7 @@ interface CoffeesContextProviderProps {
 export function CoffeesContextProvider({ children }: CoffeesContextProviderProps) {
   const storageKey = import.meta.env.VITE_STORAGE
   const initialState: CoffeeState = {
-    coffees: data,
+    coffees: jsonData,
     orders: [],
   }
   const [coffeeState, dispatch] = useImmerReducer(
@@ -51,6 +39,16 @@ export function CoffeesContextProvider({ children }: CoffeesContextProviderProps
   )
   const [cityLocation, setCityLocation] = useState('')
   const [ufLocation, setUfLocation] = useState('')
+  const [address, setAddress] = useState<FormSubmitOrderType>({
+    cep: '',
+    street: '',
+    houseNumber: 0,
+    complement: '',
+    district: '',
+    city: '',
+    uf: '',
+    payment: '',
+  })
   const { coffees, orders } = coffeeState
 
   function addAmount(id: number) {
@@ -67,6 +65,10 @@ export function CoffeesContextProvider({ children }: CoffeesContextProviderProps
 
   function clearItems() {
     dispatch(clearItemsAction())
+  }
+
+  function deliveryAddress(address: FormSubmitOrderType) {
+    setAddress(address)
   }
 
   async function fetchAddress(latitude: number, longitude: number) {
@@ -119,10 +121,12 @@ export function CoffeesContextProvider({ children }: CoffeesContextProviderProps
         orders,
         cityLocation,
         ufLocation,
+        address,
         addAmount,
         subtractAmount,
         removeOrderItems,
         clearItems,
+        deliveryAddress,
       }}
     >
       {children}

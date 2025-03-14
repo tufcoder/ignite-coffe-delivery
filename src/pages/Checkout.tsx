@@ -48,13 +48,13 @@ const formSubmitOrderSchema = z.object({
   district: z.string().min(1, 'Informe o Bairro'),
   city: z.string().min(1, 'Informe a Cidade'),
   uf: z.string().min(2, 'Informe a UF').max(2, 'Mínimo 2 chars'),
-  payment: z.enum(['0', '1', '2']),
+  payment: z.enum(['0', '1', '2', '']),
 })
 
 export type FormSubmitOrderType = z.infer<typeof formSubmitOrderSchema>
 
 export function Checkout() {
-  const { orders, clearItems } = useContext(CoffeesContext)
+  const { orders, clearItems, deliveryAddress } = useContext(CoffeesContext)
   const { register, handleSubmit, reset, setValue, /*formState*/ } = useForm({
     resolver: zodResolver(formSubmitOrderSchema),
     defaultValues: {
@@ -65,7 +65,7 @@ export function Checkout() {
       district: '',
       city: '',
       uf: '',
-      payment: undefined,
+      payment: '',
     }
   })
 
@@ -79,9 +79,10 @@ export function Checkout() {
 
   function handleFormSubmit(data: FormSubmitOrderType) {
     if (orders.length > 0) {
+      deliveryAddress(data)
       reset()
       clearItems()
-      navigate('/success', { state: data })
+      navigate('/success')
     }
   }
 

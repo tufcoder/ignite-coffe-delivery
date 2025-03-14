@@ -1,7 +1,7 @@
-import { useLocation } from 'react-router'
+import { useContext } from 'react'
 import { Clock, CurrencyDollar, MapPin } from '@phosphor-icons/react'
 
-import { FormSubmitOrderType } from './Checkout'
+import { CoffeesContext } from '../contexts/CoffeesContext'
 
 import delivery from '../assets/svg/delivery.svg'
 
@@ -16,10 +16,9 @@ import {
 } from './Success.styles'
 
 export function Success() {
-  const location = useLocation()
-  const data = location.state as FormSubmitOrderType
+  const { address } = useContext(CoffeesContext)
 
-  return (
+  return address.street !== '' ? (
     <SuccessContainer>
       <header>
         <h1>Uhu! Pedido confirmado</h1>
@@ -33,8 +32,8 @@ export function Success() {
                 <MapPin size={16} weight='fill' aria-label={IconTitles.MapPin} />
               </IconContainer>
               <div>
-                <address><span>Entrega em </span>{data.street}, {data.houseNumber}</address>
-                <address><span>{data.district} - {data.city}, {data.uf}</span></address>
+                <address><span>Entrega em </span>{address.street}, {address.houseNumber}</address>
+                <address><span>{address.district} - {address.city}, {address.uf}</span></address>
               </div>
             </li>
             <li>
@@ -54,9 +53,9 @@ export function Success() {
                 <p>Pagamento na entrega</p>
                 <p>
                   <strong>
-                    {data.payment === '0' && 'Cartão de Crédito'}
-                    {data.payment === '1' && 'Cartão de Débito'}
-                    {data.payment === '2' && 'Dinheiro'}
+                    {address.payment === '0' && 'Cartão de Crédito'}
+                    {address.payment === '1' && 'Cartão de Débito'}
+                    {address.payment === '2' && 'Dinheiro'}
                   </strong>
                 </p>
               </div>
@@ -71,5 +70,5 @@ export function Success() {
         />
       </MainContainer>
     </SuccessContainer>
-  )
+  ) : null
 }
