@@ -2,15 +2,25 @@ import styled from "styled-components";
 
 import { flexColumnCenter, pixelsToRem } from "../styles/utils";
 import { baloo2M, baloo2S, robotoS, robotoTag } from "../styles/typograph";
+import { above, media } from "../styles/breakpoints";
 
 export const CoffeeCardContainer = styled.div`
   position: relative;
-  max-width: ${pixelsToRem(256)};
+  min-width: ${pixelsToRem(240)};
+  width: calc(100% - 1rem);
   ${flexColumnCenter}
   gap: 1rem;
   border-radius: 6px 36px;
-  padding: 1rem;
+  padding: 0.75rem;
   background-color: ${props => props.theme["base-card"]};
+
+  ${above("desktop")} {
+    width: 100%;
+  }
+
+  ${media("min-width", 1437)} {
+    padding: 1rem;
+  }
 
   img {
     position: absolute;
