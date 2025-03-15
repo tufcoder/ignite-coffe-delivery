@@ -21,7 +21,7 @@ interface CoffeesContextProviderProps {
 }
 
 export function CoffeesContextProvider({ children }: CoffeesContextProviderProps) {
-  const storageKey = import.meta.env.VITE_STORAGE
+  const storageKey = import.meta.env.VITE_LOCAL_STORAGE
   const initialState: CoffeeState = {
     coffees: jsonData,
     orders: [],
